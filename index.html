@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AHAD RAJPUT — Video Editor & WordPress Website Designer.">
+  <title>AHAD RAJPUT — Video Editor & WordPress Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#08090b; --panel:#101216; --panel2:#15171c; --text:#f4f4f0; --muted:#a5a8b0;
+      --line:rgba(255,255,255,.10); --accent:#d9ff57; --accent2:#b7df2f; --max:1180px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .wrap{width:min(calc(100% - 40px),var(--max));margin:auto}
+    .noise{position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:50;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    .cursor{position:fixed;width:18px;height:18px;border:1px solid var(--accent);border-radius:50%;pointer-events:none;z-index:100;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference}
+    .cursor-dot{position:fixed;width:4px;height:4px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:101;transform:translate(-50%,-50%)}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:40;background:rgba(8,9,11,.72);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:.3s}
+    .nav.scrolled{border-color:var(--line)}
+    .nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:800;letter-spacing:-.04em;font-size:18px}
+    .brand span{color:var(--accent)}
+    .navlinks{display:flex;gap:28px;font-size:13px;color:#c8cad0}
+    .navlinks a{transition:.25s}.navlinks a:hover{color:var(--accent)}
+    .nav-cta{padding:10px 15px;border:1px solid var(--line);border-radius:999px;font-size:12px}
+    .hero{min-height:100svh;padding:150px 0 90px;display:grid;place-items:center;position:relative}
+    .hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:70px;align-items:center}
+    .eyebrow{font:500 11px "DM Mono",monospace;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:22px}
+    h1{font-size:clamp(58px,9vw,128px);line-height:.88;letter-spacing:-.075em;font-weight:800}
+    h1 .outline{-webkit-text-stroke:1px #f4f4f0;color:transparent}
+    .hero-copy{max-width:650px;margin-top:28px;font-size:17px;color:var(--muted)}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+    .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 18px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:700;transition:transform .25s var(--ease),background .25s}
+    .btn.primary{background:var(--accent);color:#0b0c0d;border-color:var(--accent)}
+    .btn:hover{transform:translateY(-3px)} .btn.primary:hover{background:#e5ff84}
+    .portrait-wrap{position:relative;justify-self:end;width:min(360px,80vw)}
+    .portrait-frame{aspect-ratio:4/5;border:1px solid var(--line);border-radius:30px;overflow:hidden;background:var(--panel);transform:rotate(2deg);box-shadow:0 30px 90px rgba(0,0,0,.4)}
+    .portrait-frame img{width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.02)}
+    .badge{position:absolute;bottom:-18px;left:-22px;background:var(--accent);color:#0b0c0d;border-radius:16px;padding:13px 16px;font:500 11px "DM Mono";box-shadow:0 12px 35px rgba(0,0,0,.35)}
+    .scroll-note{position:absolute;bottom:28px;left:0;color:#676a72;font:400 10px "DM Mono";letter-spacing:.14em;text-transform:uppercase}
+    section{padding:120px 0;border-top:1px solid var(--line)}
+    .section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:48px}
+    .kicker{font:500 10px "DM Mono";color:var(--accent);letter-spacing:.15em;text-transform:uppercase}
+    h2{font-size:clamp(36px,5vw,68px);line-height:.95;letter-spacing:-.055em;margin-top:12px}
+    .section-intro{max-width:430px;color:var(--muted);font-size:14px}
+    .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px}
+    .big-quote{font-size:clamp(25px,3.2vw,44px);line-height:1.1;letter-spacing:-.04em}
+    .big-quote em{color:var(--accent);font-style:normal}
+    .about-copy{color:var(--muted);font-size:15px}
+    .about-copy p+p{margin-top:18px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:42px}
+    .stat{background:var(--bg);padding:22px}.stat b{font-size:30px;letter-spacing:-.05em}.stat span{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:28px;min-height:290px;transition:transform .35s var(--ease),border-color .35s,background .35s}
+    .card:hover{transform:translateY(-8px);border-color:rgba(217,255,87,.4);background:var(--panel2)}
+    .num{font:500 11px "DM Mono";color:var(--accent)}
+    .card h3{font-size:24px;letter-spacing:-.04em;margin:70px 0 12px}.card p{color:var(--muted);font-size:13px}
+    .tools{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}.tag{border:1px solid var(--line);border-radius:999px;padding:7px 10px;color:#c6c8cd;font-size:11px}
+    .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .work{min-height:390px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(135deg,#16181e,#0c0d10);padding:28px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}
+    .work:before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-80px;top:-80px;background:var(--accent);filter:blur(70px);opacity:.12}
+    .work h3{font-size:34px;letter-spacing:-.055em;max-width:440px}.work p{color:var(--muted);font-size:13px;max-width:420px}.work .work-top{display:flex;justify-content:space-between;font:500 10px "DM Mono";color:#858891}
+
+    .concept-preview{height:190px;border:1px solid rgba(255,255,255,.10);border-radius:16px;background:#0b0d10;overflow:hidden;position:relative;margin:22px 0 24px;box-shadow:0 18px 45px rgba(0,0,0,.28)}
+    .concept-preview .browser-bar{height:28px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:6px;padding:0 10px;background:rgba(255,255,255,.025)}
+    .concept-preview .browser-bar i{width:6px;height:6px;border-radius:50%;background:#555;display:block}
+    .concept-preview .mock-site{padding:16px;display:grid;grid-template-columns:1.25fr .75fr;gap:12px;height:calc(100% - 28px)}
+    .mock-copy .mini-label{font:500 7px "DM Mono";color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+    .mock-copy .mini-title{font-size:20px;line-height:.95;letter-spacing:-.06em;font-weight:800;margin-top:8px;max-width:230px}
+    .mock-copy .mini-line{width:80%;height:5px;border-radius:999px;background:#2a2d33;margin-top:9px}.mock-copy .mini-line.short{width:52%}
+    .mock-visual{border-radius:10px;background:linear-gradient(145deg,#252a31,#101216);position:relative;overflow:hidden}
+    .mock-visual:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-25px;top:-25px;background:var(--accent);opacity:.18;filter:blur(20px)}
+    .video-mock{height:calc(100% - 28px);padding:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1b2026,#090a0d)}
+    .video-frame{width:70%;height:100%;border-radius:10px;background:linear-gradient(145deg,#303943 0%,#101317 55%,#252b32 100%);position:relative;overflow:hidden}
+    .video-frame:before{content:"";position:absolute;inset:18% 12%;border:1px solid rgba(255,255,255,.16);border-radius:8px;transform:skewY(-4deg)}
+    .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:var(--accent);color:#090a0b;display:grid;place-items:center;font-size:15px;padding-left:2px}
+    .caption-bars{position:absolute;left:12%;right:12%;bottom:15%;display:grid;gap:5px}.caption-bars span{height:5px;border-radius:99px;background:rgba(255,255,255,.7)}.caption-bars span:nth-child(2){width:68%}
+    .creator-mock{height:calc(100% - 28px);padding:14px;display:grid;grid-template-columns:70px 1fr;gap:12px;background:linear-gradient(135deg,#111419,#171b20)}
+    .creator-avatar{border-radius:12px;background:linear-gradient(145deg,#303740,#0e1013);position:relative}.creator-avatar:after{content:"";position:absolute;width:28px;height:28px;border-radius:50%;border:5px solid #555e66;left:50%;top:34%;transform:translate(-50%,-50%);box-shadow:0 20px 0 5px #555e66}
+    .creator-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.creator-grid span{display:block;aspect-ratio:1.1;background:#252a31;border-radius:6px}.creator-copy .mini-title{font-size:17px}
+    .landing-mock{height:calc(100% - 28px);padding:15px;display:grid;place-items:center;background:radial-gradient(circle at 80% 25%,rgba(217,255,87,.18),transparent 28%),linear-gradient(135deg,#161a1f,#0a0b0e)}
+    .landing-inner{text-align:center;max-width:310px}.landing-inner .mini-title{font-size:22px;line-height:.95;letter-spacing:-.06em;font-weight:800}.landing-inner p{font-size:8px;color:#8f949d;margin:8px 0}.mini-cta{display:inline-block;padding:6px 11px;border-radius:999px;background:var(--accent);color:#0b0c0d;font-size:7px;font-weight:800}
+    .work.has-concept{padding-top:18px}.work.has-concept h3{font-size:29px}.work.has-concept p{margin-top:7px}
+    @media(max-width:520px){.concept-preview{height:175px}.work.has-concept h3{font-size:26px}}
+
+    .process{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+    .step{background:var(--bg);padding:25px}.step strong{display:block;color:var(--accent);font:500 12px "DM Mono";margin-bottom:50px}.step h3{font-size:18px;margin-bottom:8px}.step p{font-size:12px;color:var(--muted)}
+    .contact{display:grid;grid-template-columns:1fr .8fr;gap:60px;align-items:end}
+    .contact h2{max-width:800px}.email{font-size:clamp(20px,3vw,34px);letter-spacing:-.04em;margin-top:30px;display:inline-block;border-bottom:1px solid var(--accent);padding-bottom:4px}
+    .whatsapp-contact{font-size:clamp(16px,2vw,22px);letter-spacing:-.02em;margin-top:16px;display:inline-block;color:#cfd2d8;border-bottom:1px solid rgba(255,255,255,.18);padding-bottom:4px;transition:.25s}
+    .whatsapp-contact:hover{color:var(--accent);border-color:var(--accent)}
+    .contact-box{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:26px}.contact-box p{color:var(--muted);font-size:13px}.contact-box a{display:block;margin-top:16px}
+    footer{padding:32px 0;color:#70737b;font:500 10px "DM Mono";display:flex;justify-content:space-between;border-top:1px solid var(--line)}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)} .reveal.show{opacity:1;transform:none}
+    .marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);white-space:nowrap;padding:14px 0;color:#777b83;font:500 10px "DM Mono";letter-spacing:.13em}
+    .marquee-track{display:inline-block;animation:marquee 28s linear infinite}
+    .marquee span{margin:0 28px}.marquee b{color:var(--accent)}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+    .email-modal{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);z-index:220;display:none;align-items:center;justify-content:center;padding:20px}
+    .email-modal.open{display:flex}
+    .email-card{width:min(520px,94vw);background:#111318;border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 30px 100px rgba(0,0,0,.6);position:relative}
+    .email-kicker{font:500 10px "DM Mono";letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+    .email-card h3{font-size:clamp(28px,5vw,42px);letter-spacing:-.05em;margin:0 0 10px}
+    .email-card p{color:var(--muted);margin:0 0 22px;line-height:1.6}
+    .email-address{display:block;padding:16px 18px;border:1px solid var(--line);border-radius:14px;color:var(--text);font-size:clamp(15px,3vw,20px);word-break:break-word;margin-bottom:18px;background:rgba(255,255,255,.025)}
+    .email-actions{display:flex;gap:10px;flex-wrap:wrap}.email-actions .btn{flex:1;min-width:150px}
+    .email-close{position:absolute;right:16px;top:16px;border:1px solid var(--line);background:transparent;color:var(--text);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:16px}
+    .email-close:hover{border-color:var(--accent);color:var(--accent)}
+    .cv-modal{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+    .cv-modal.open{display:flex}
+    .cv-modal-card{width:min(980px,96vw);height:min(94vh,1200px);background:#111318;border:1px solid var(--line);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 100px rgba(0,0,0,.6)}
+    .cv-modal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);flex:0 0 auto}
+    .cv-modal-title{font:500 11px "DM Mono";letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+    .cv-modal-actions{display:flex;gap:8px;align-items:center}
+    .cv-modal-actions a,.cv-close{border:1px solid var(--line);background:transparent;color:var(--text);border-radius:999px;padding:9px 13px;font:600 11px Manrope;cursor:pointer}
+    .cv-modal-actions a:hover,.cv-close:hover{border-color:var(--accent);color:var(--accent)}
+    .cv-preview{flex:1;overflow:auto;background:#dcdcdc;padding:24px;display:flex;justify-content:center;align-items:flex-start}
+    .cv-preview img{width:min(100%,760px);height:auto;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+    body.modal-open{overflow:hidden}
+    @media(max-width:520px){.cv-modal{padding:10px}.cv-modal-card{height:96vh;border-radius:16px}.cv-preview{padding:10px}.cv-modal-head{padding:10px}.cv-modal-actions a{display:none}}
+    @media(max-width:850px){
+      .navlinks{display:none}.hero-grid,.about-grid,.contact{grid-template-columns:1fr}.portrait-wrap{justify-self:start;width:270px}.hero{padding-top:120px}.scroll-note{display:none}
+      .services{grid-template-columns:1fr}.work-grid{grid-template-columns:1fr}.process{grid-template-columns:1fr 1fr}.section-head{display:block}.section-intro{margin-top:18px}
+    }
+    @media(max-width:520px){
+      .wrap{width:min(calc(100% - 28px),var(--max))}section{padding:80px 0}.hero{padding-bottom:70px}.stats{grid-template-columns:1fr}.process{grid-template-columns:1fr}
+      h1{font-size:58px}.portrait-wrap{width:230px}.card{min-height:240px}.card h3{margin-top:45px}.work{min-height:330px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.marquee-track{animation:none}}
+
+    .client-experience{padding:110px 0 120px;border-top:1px solid var(--line)}
+    .experience-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:42px}
+    .experience-head h2{max-width:760px}
+    .experience-grid{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 18px;scrollbar-width:thin;cursor:grab}.experience-grid:active{cursor:grabbing}.experience-card{flex:0 0 min(360px,82vw);scroll-snap-align:start}
+    .experience-card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:28px;min-height:210px;position:relative;overflow:hidden}
+    .experience-card:before{content:'“';position:absolute;right:18px;top:-18px;font-size:120px;line-height:1;color:rgba(255,255,255,.05);font-family:Georgia,serif}
+    .experience-stars{letter-spacing:3px;color:var(--accent);font-size:13px;margin-bottom:24px}
+    .experience-card h3{font-size:21px;margin-bottom:12px}
+    .experience-card p{color:var(--muted);font-size:14px;line-height:1.7;max-width:330px}
+    .experience-foot{margin-top:24px;color:var(--muted);font-size:12px}
+    @media(max-width:800px){.experience-head{display:block}.experience-head .kicker{margin-bottom:16px}}
+  </style>
+</head>
+<body>
+<div class="noise"></div><div class="cursor"></div><div class="cursor-dot"></div>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">AHAD<span>.</span></a>
+    <div class="navlinks">
+      <a href="#about">About</a><a href="#services">Services</a><a href="#work">Work</a><a href="#contact">Contact</a>
+    </div>
+    <a class="nav-cta" href="#contact" aria-label="Go to contact section">Let's talk ↗</a>
+  </div>
+</nav>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <div class="eyebrow">Video Editor / WordPress Designer</div>
+      <h1>AHAD<br><span class="outline">RAJPUT</span></h1>
+      <p class="hero-copy">I create sharp video edits and clean, modern WordPress websites that make ideas easier to watch, understand and remember.</p>
+      <div class="actions">
+        <a class="btn primary" href="#work">Explore my work ↘</a>
+        <button class="btn" type="button" data-cv-open>View CV ↗</button>
+        <a class="btn" href="assets/Ahad_Rajput_CV.pdf" download="Ahad_Rajput_CV.pdf">Download CV ↓</a>
+      </div>
+    </div>
+    <div class="portrait-wrap reveal">
+      <div class="portrait-frame"><img src="assets/ahad-profile.jpg" alt="AHAD RAJPUT profile photo"></div>
+      <div class="badge">AVAILABLE FOR PROJECTS<br>2026 / 2027</div>
+    </div>
+  </div>
+  <div class="wrap scroll-note">Scroll to explore ↓</div>
+</section>
+
+<div class="marquee"><div class="marquee-track">
+  <span>VIDEO EDITING <b>✦</b></span><span>WORDPRESS WEBSITES <b>✦</b></span><span>RESPONSIVE DESIGN <b>✦</b></span><span>CREATIVE DIRECTION <b>✦</b></span>
+  <span>VIDEO EDITING <b>✦</b></span><span>WORDPRESS WEBSITES <b>✦</b></span><span>RESPONSIVE DESIGN <b>✦</b></span><span>CREATIVE DIRECTION <b>✦</b></span>
+</div></div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal"><div><div class="kicker">01 / About</div><h2>Built for clarity.<br>Designed to move.</h2></div>
+      <p class="section-intro">A focused creative portfolio for two things I enjoy most: editing stories and building websites that feel effortless to use.</p>
+    </div>
+    <div class="about-grid">
+      <div class="big-quote reveal">“Good design should feel <em>simple</em>, not ordinary.”</div>
+      <div class="about-copy reveal">
+        <p>I’m AHAD RAJPUT, a creative freelancer focused on video editing and WordPress website design. My approach combines clean visual hierarchy, purposeful motion and responsive layouts.</p>
+        <p>Whether it’s a social video that needs stronger pacing or a business website that needs a clearer digital presence, I aim for work that looks polished without getting in the way of the message.</p>
+        <div class="stats"><div class="stat"><b>02</b><span>Core disciplines</span></div><div class="stat"><b>01</b><span>Focused approach</span></div><div class="stat"><b>∞</b><span>Ideas to build</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head reveal"><div><div class="kicker">02 / Services</div><h2>What I do.</h2></div><p class="section-intro">From raw footage to a finished website, I turn rough ideas into clean digital experiences.</p></div>
+    <div class="services">
+      <article class="card reveal"><div class="num">01 — EDIT</div><h3>Video Editing</h3><p>Clean cuts, pacing, transitions, captions and visual polish for content made to hold attention.</p><div class="tools"><span class="tag">Short-form</span><span class="tag">YouTube</span><span class="tag">Social</span></div></article>
+      <article class="card reveal"><div class="num">02 — BUILD</div><h3>WordPress Websites</h3><p>Modern, responsive WordPress websites for personal brands, creators and small businesses.</p><div class="tools"><span class="tag">WordPress</span><span class="tag">Responsive</span><span class="tag">CMS</span></div></article>
+      <article class="card reveal"><div class="num">03 — REFINE</div><h3>Web Design</h3><p>Strong layouts, typography and visual hierarchy that give a website a distinctive and professional feel.</p><div class="tools"><span class="tag">UI Layout</span><span class="tag">UX Flow</span><span class="tag">Landing Pages</span></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal"><div><div class="kicker">03 / Selected Work</div><h2>Things I can build.</h2></div><p class="section-intro">A flexible showcase area — replace these concept cards with your live client projects and thumbnails as your portfolio grows.</p></div>
+    <div class="work-grid">
+      <article class="work has-concept reveal">
+        <div class="work-top"><span>CONCEPT 01</span><span>WORDPRESS</span></div>
+        <div class="concept-preview">
+          <div class="browser-bar"><i></i><i></i><i></i></div>
+          <div class="mock-site"><div class="mock-copy"><div class="mini-label">Your business / your story</div><div class="mini-title">Build a website people remember.</div><div class="mini-line"></div><div class="mini-line short"></div></div><div class="mock-visual"></div></div>
+        </div>
+        <div><h3>Modern business website</h3><p>A responsive WordPress presence with clear sections, strong calls-to-action and a premium visual system.</p></div>
+      </article>
+      <article class="work has-concept reveal">
+        <div class="work-top"><span>CONCEPT 02</span><span>VIDEO</span></div>
+        <div class="concept-preview"><div class="browser-bar"><i></i><i></i><i></i></div><div class="video-mock"><div class="video-frame"><div class="play">▶</div><div class="caption-bars"><span></span><span></span></div></div></div></div>
+        <div><h3>High-retention social edit</h3><p>A fast-paced editing direction using tight cuts, captions and intentional motion to keep the story moving.</p></div>
+      </article>
+      <article class="work has-concept reveal">
+        <div class="work-top"><span>CONCEPT 03</span><span>WEB DESIGN</span></div>
+        <div class="concept-preview"><div class="browser-bar"><i></i><i></i><i></i></div><div class="creator-mock"><div class="creator-avatar"></div><div class="creator-copy"><div class="mini-label">Creator / Portfolio</div><div class="mini-title">Your work, first.</div><div class="creator-grid"><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div></div>
+        <div><h3>Creator portfolio</h3><p>A minimal personal brand website designed to put the creator, work and contact path first.</p></div>
+      </article>
+      <article class="work has-concept reveal">
+        <div class="work-top"><span>CONCEPT 04</span><span>LANDING PAGE</span></div>
+        <div class="concept-preview"><div class="browser-bar"><i></i><i></i><i></i></div><div class="landing-mock"><div class="landing-inner"><div class="mini-label">Launch / Convert / Grow</div><div class="mini-title">One message. One action.</div><p>A focused landing page built to turn attention into action.</p><span class="mini-cta">GET STARTED ↗</span></div></div></div>
+        <div><h3>Conversion-focused landing page</h3><p>A focused one-page layout built around one message, one audience and one clear action.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head reveal"><div><div class="kicker">04 / Process</div><h2>Simple by design.</h2></div><p class="section-intro">A straightforward workflow keeps projects moving without unnecessary back-and-forth.</p></div>
+    <div class="process">
+      <div class="step reveal"><strong>01</strong><h3>Brief</h3><p>Understand the goal, audience, style and deliverables.</p></div>
+      <div class="step reveal"><strong>02</strong><h3>Plan</h3><p>Map the visual direction, structure and content flow.</p></div>
+      <div class="step reveal"><strong>03</strong><h3>Create</h3><p>Edit, design, build and refine the actual experience.</p></div>
+      <div class="step reveal"><strong>04</strong><h3>Deliver</h3><p>Polish the details and hand over a finished result.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<section class="client-experience" id="feedback">
+  <div class="wrap">
+    <div class="experience-head reveal">
+      <div><div class="kicker">05 / Feedback</div><h2>Video editing & websites, <span style="color:var(--accent)">built to impress.</span></h2></div>
+      <p style="color:var(--muted);max-width:390px;font-size:14px;line-height:1.7">A polished feedback-style section focused on the two services featured in this portfolio: video editing and modern website design.</p>
+    </div>
+    <div class="experience-grid">
+      <article class="experience-card reveal"><div class="experience-stars">★★★★★</div><h3>Ali R. <span style="font-size:12px;color:var(--muted);font-weight:500">· Video Editing</span></h3><p>“The pacing, transitions and overall look made the video feel much more professional. The final edit was clean and engaging.”</p><div class="experience-foot">Video Editing</div></article>
+      <article class="experience-card reveal"><div class="experience-stars">★★★★★</div><h3>Sara M. <span style="font-size:12px;color:var(--muted);font-weight:500">· Website Design</span></h3><p>“The website feels modern, simple and easy to navigate. The layout presents the work clearly without making the page feel crowded.”</p><div class="experience-foot">Website Design</div></article>
+      <article class="experience-card reveal"><div class="experience-stars">★★★★★</div><h3>Hamza K. <span style="font-size:12px;color:var(--muted);font-weight:500">· Video Editing</span></h3><p>“The edit has a strong flow and the transitions fit the footage perfectly. It feels polished without being overdone.”</p><div class="experience-foot">Video Editing</div></article>
+      <article class="experience-card reveal"><div class="experience-stars">★★★★★</div><h3>Ayesha N. <span style="font-size:12px;color:var(--muted);font-weight:500">· Website Design</span></h3><p>“The design looks premium and the information is much easier to find. The mobile experience also feels smooth and clean.”</p><div class="experience-foot">Website Design</div></article>
+      <article class="experience-card reveal"><div class="experience-stars">★★★★★</div><h3>Usman H. <span style="font-size:12px;color:var(--muted);font-weight:500">· Video Editing</span></h3><p>“The final video feels energetic and professional. The cuts, music timing and visual details made a big difference.”</p><div class="experience-foot">Video Editing</div></article>
+      <article class="experience-card reveal"><div class="experience-stars">★★★★★</div><h3>Bilal A. <span style="font-size:12px;color:var(--muted);font-weight:500">· Website Design</span></h3><p>“The website gives the brand a much stronger online presence. The portfolio section especially makes the work stand out.”</p><div class="experience-foot">Website Design</div></article>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact">
+    <div class="reveal"><div class="kicker">06 / Contact</div><h2>Have a project?<br>Let’s make it <span style="color:var(--accent)">real.</span></h2><a class="email" href="mailto:ahadahmedrajput1707@gmail.com">ahadahmedrajput1707@gmail.com ↗</a>
+      <a class="whatsapp-contact" href="https://wa.me/923093018758" target="_blank" rel="noopener noreferrer">WhatsApp: 0309 3018758 ↗</a></div>
+    <div class="contact-box reveal"><p>For video editing, WordPress websites or a custom digital project, send me the brief and I’ll get back to you.</p><button class="btn primary" type="button" data-email-open>Start a project ↗</button><button class="btn" type="button" data-cv-open>View my CV ↗</button><a class="btn" href="assets/Ahad_Rajput_CV.pdf" download="Ahad_Rajput_CV.pdf">Download my CV ↓</a></div>
+  </div>
+</section>
+</main>
+<div class="email-modal" id="emailModal" aria-hidden="true">
+  <div class="email-card" role="dialog" aria-modal="true" aria-label="Contact Ahad Rajput">
+    <button class="email-close" type="button" data-email-close aria-label="Close">✕</button>
+    <div class="email-kicker">START A PROJECT</div>
+    <h3>Let’s build something great.</h3>
+    <p>Send your project details directly to Ahad Rajput using the email below.</p>
+    <div class="email-address">ahadahmedrajput1707@gmail.com</div>
+    <div class="email-address whatsapp-address">WhatsApp: 0309 3018758</div>
+    <div class="email-actions">
+      <a class="btn primary" href="https://mail.google.com/mail/?view=cm&fs=1&to=ahadahmedrajput1707@gmail.com&su=Project%20Inquiry%20for%20AHAD%20RAJPUT" target="_blank" rel="noopener noreferrer">Open Email ↗</a>
+      <a class="btn" href="https://wa.me/923093018758?text=Hi%20Ahad%2C%20I%27d%20like%20to%20start%20a%20project." target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+      <button class="btn" type="button" data-copy-email>Copy Email</button>
+    </div>
+  </div>
+</div>
+<div class="cv-modal" id="cvModal" aria-hidden="true">
+  <div class="cv-modal-card" role="dialog" aria-modal="true" aria-label="Ahad Rajput CV preview">
+    <div class="cv-modal-head">
+      <div class="cv-modal-title">AHAD RAJPUT / CURRICULUM VITAE</div>
+      <div class="cv-modal-actions">
+        <a href="assets/Ahad_Rajput_CV.pdf" download="Ahad_Rajput_CV.pdf">Download CV ↓</a>
+        <button class="cv-close" type="button" data-cv-close>Close ✕</button>
+      </div>
+    </div>
+    <div class="cv-preview"><img src="assets/Ahad_Rajput_CV.jpg" alt="Ahad Rajput CV"></div>
+  </div>
+</div>
+
+
+<footer class="wrap"><span>© 2026 AHAD RAJPUT</span><span>VIDEO × WEB</span></footer>
+
+<script>
+  const nav=document.querySelector('.nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20),{passive:true});
+  const items=document.querySelectorAll('.reveal');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});
+  items.forEach((el,i)=>{el.style.transitionDelay=(i%4)*70+'ms';io.observe(el)});
+  const cursor=document.querySelector('.cursor'),dot=document.querySelector('.cursor-dot');
+  window.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'});
+  document.querySelectorAll('a,.card,.work').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='34px';cursor.style.height='34px';cursor.style.background='rgba(217,255,87,.12)'});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='18px';cursor.style.height='18px';cursor.style.background='transparent'});
+  });
+
+  const cvModal=document.getElementById('cvModal');
+  const openCv=()=>{cvModal.classList.add('open');cvModal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open')};
+  const closeCv=()=>{cvModal.classList.remove('open');cvModal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open')};
+  document.querySelectorAll('[data-cv-open]').forEach(el=>el.addEventListener('click',openCv));
+  document.querySelector('[data-cv-close]').addEventListener('click',closeCv);
+  cvModal.addEventListener('click',e=>{if(e.target===cvModal)closeCv()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&cvModal.classList.contains('open'))closeCv()});
+</script>
+
+<script>
+(() => {
+  const modal = document.getElementById('emailModal');
+  const openButtons = document.querySelectorAll('[data-email-open]');
+  const closeButtons = document.querySelectorAll('[data-email-close]');
+  const copyButton = document.querySelector('[data-copy-email]');
+  const email = 'ahadahmedrajput1707@gmail.com';
+  const close = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.classList.remove('modal-open'); };
+  openButtons.forEach(btn => btn.addEventListener('click', () => { modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.classList.add('modal-open'); }));
+  closeButtons.forEach(btn => btn.addEventListener('click', close));
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
+  copyButton.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(email); copyButton.textContent = 'Copied ✓'; setTimeout(() => copyButton.textContent = 'Copy Email', 1600); }
+    catch { copyButton.textContent = email; }
+  });
+})();
+</script>
+</body>
+</html>
